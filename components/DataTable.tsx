@@ -51,7 +51,7 @@ const DataTable = <T,>({
             {columns.map((column, columnIndex) => (
               <TableCell
                 key={columnIndex}
-                className={cn('py-4 first:pl-5 last:pr-5 text-purple-100', bodyCellClassName)}
+                className={cn('py-4 first:pl-5 last:pr-5 text-purple-100', bodyCellClassName, column.cellClassName)}
               >
                 {column.cell(row, columnIndex)}
               </TableCell>
