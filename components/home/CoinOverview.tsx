@@ -6,6 +6,7 @@ import CandleStickChart from '../CandleStickChart';
 
 const CoinOverview = async () => {
     try{
+      // await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for testing
       const [coin, coinOHLCData] = await Promise.all([
         fetcher<CoinDetailsData>(`coins/bitcoin`, {
           dex_pair_format: 'symbol'

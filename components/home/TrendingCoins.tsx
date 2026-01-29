@@ -3,12 +3,13 @@ import { fetcher } from '@/lib/coingecko.actions';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import { cn, formatCurrency, formatPercentage } from '@/lib/utils';
 import { TrendingCoinsFallback } from './fallback';
 
 const TrendingCoins = async () => {
   let trendingCoins;
   try {
+    // await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for testing
     trendingCoins = await fetcher<{ coins: TrendingCoin[] }>('search/trending', undefined, 300);
   } catch (error) {
     console.error('Error fetching trending coins:', error);
@@ -37,13 +38,14 @@ const TrendingCoins = async () => {
         const isTrendingUp = item.data.price_change_percentage_24h.usd > 0;
         return (
           <div className={cn('price-change', isTrendingUp ? 'text-green-500' : 'text-red-500')}>
-            <p>
+            <p className='flex items-center'>
+              {formatPercentage(item.data.price_change_percentage_24h.usd)}
               {isTrendingUp ? (
                 <TrendingUp width={16} height={16} />
               ) : (
                 <TrendingDown width={16} height={16} />
               )}
-              {Math.abs(item.data.price_change_percentage_24h.usd).toFixed(2)}%
+              
             </p>
           </div>
         );
@@ -52,7 +54,7 @@ const TrendingCoins = async () => {
     {
       header: 'Price',
       cellClassName: 'price-cell',
-      cell: (coin) => coin.item.data.price,
+      cell: (coin) => formatCurrency(coin.item.data.price),
     },
   ];
   return (

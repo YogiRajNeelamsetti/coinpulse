@@ -1,9 +1,10 @@
+import Categories from '@/components/home/Categories';
 import CoinOverview from '@/components/home/CoinOverview';
 import TrendingCoins from '@/components/home/TrendingCoins';
-import { CoinOverviewFallback, TrendingCoinsFallback } from '@/components/home/fallback';
+import { CategoriesFallback, CoinOverviewFallback, TrendingCoinsFallback } from '@/components/home/fallback';
 import { Suspense } from 'react';
 
-const page = () => {
+const Page = () => {
   return (
     <main className="main-container">
       <section className="home-grid">
@@ -16,10 +17,12 @@ const page = () => {
       </section>
 
       <section className="w-full mt-7 space-y-4">
-        <h4>Categories</h4>
+        <Suspense fallback={<CategoriesFallback />}>
+          <Categories />
+        </Suspense>
       </section>
     </main>
   );
 };
 
-export default page;
+export default Page;

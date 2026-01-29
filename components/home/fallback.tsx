@@ -10,6 +10,14 @@ export const CoinOverviewFallback = () => {
           <div className="header-line-lg skeleton animate-pulse rounded" />
         </div>
       </div>
+      <div className="flex gap-2 mb-4">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="period-button-skeleton skeleton animate-pulse" />
+        ))}
+      </div>
+      <div className="chart">
+        <div className="chart-skeleton skeleton animate-pulse" />
+      </div>
     </div>
   );
 };
@@ -42,7 +50,7 @@ const skeletonColumns: DataTableColumn<number>[] = [
   },
 ];
 
-const skeletonData = [1, 2, 3, 4, 5, 6];
+const trendingSkeletonData = [1, 2, 3, 4, 5, 6];
 
 export const TrendingCoinsFallback = () => {
   return (
@@ -50,11 +58,66 @@ export const TrendingCoinsFallback = () => {
       <h4>Trending Coins</h4>
       <DataTable
         columns={skeletonColumns}
-        data={skeletonData}
+        data={trendingSkeletonData}
         rowKey={(_, index) => index}
         tableClassName="trending-coins-table"
         headerCellClassName="py-3!"
         bodyCellClassName="py-2!"
+      />
+    </div>
+  );
+};
+
+const categoriesSkeletonColumns: DataTableColumn<number>[] = [
+  {
+    header: 'Category',
+    cellClassName: 'category-cell',
+    cell: () => <div className="category-skeleton skeleton animate-pulse rounded" />,
+  },
+  {
+    header: 'Top Gainers',
+    cellClassName: 'top-gainers-cell',
+    cell: () => (
+      <div className="flex gap-1">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="coin-skeleton skeleton animate-pulse" />
+        ))}
+      </div>
+    ),
+  },
+  {
+    header: '24h Change',
+    cellClassName: 'change-header-cell',
+    cell: () => (
+      <div className="change-cell">
+        <div className="value-skeleton-sm skeleton animate-pulse rounded" />
+        <div className="change-icon skeleton animate-pulse" />
+      </div>
+    ),
+  },
+  {
+    header: 'Market Cap',
+    cellClassName: 'market-cap-cell',
+    cell: () => <div className="value-skeleton-lg skeleton animate-pulse rounded" />,
+  },
+  {
+    header: '24h Volume',
+    cellClassName: 'volume-cell',
+    cell: () => <div className="value-skeleton-md skeleton animate-pulse rounded" />,
+  },
+];
+
+const categoriesSkeletonData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+export const CategoriesFallback = () => {
+  return (
+    <div id="categories-fallback">
+      <h4>Top Categories</h4>
+      <DataTable
+        columns={categoriesSkeletonColumns}
+        data={categoriesSkeletonData}
+        rowKey={(_, index) => index}
+        tableClassName="mt-3"
       />
     </div>
   );

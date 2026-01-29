@@ -33,7 +33,7 @@ const Header = () => {
               'is-active': pathname === '/coins',
             })}
           >
-            Coins
+            All Coins
           </Link>
         </nav>
       </div>
