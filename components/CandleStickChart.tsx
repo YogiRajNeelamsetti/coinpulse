@@ -29,7 +29,7 @@ const CandleStickChart = ({
             
 
             // const newData =await fetcher<OHLCData[]>(`/coins/${coinId}/ohlc`, {
-            const newData = await fetcher<OHLCData[]>(`/coins/${coinId}/ohlc`, {
+            const newData = await fetcher<OHLCData[]>(`coins/${coinId}/ohlc`, {
                 vs_currency: 'usd',
                 days,
                 // interval,
@@ -65,7 +65,7 @@ const CandleStickChart = ({
         const series = chart.addSeries(CandlestickSeries, getCandlestickConfig());
 
         const convertedToSeconds = ohlcData.map((item) => [
-          Math.floor(item[0] / 1000), //time in seconds
+          Math.floor(item[0] / 1000), 
           item[1], //open price
           item[2], //high price
           item[3], //low price
