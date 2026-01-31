@@ -3,10 +3,18 @@ import DataTable from "../DataTable";
 import Image from "next/image";
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import { TrendingDown, TrendingUp } from "lucide-react";
+import { CategoriesFallback } from "./fallback";
 
 const Categories = async () => {
-    // await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for testing
-    const categories = await fetcher<Category[]>('coins/categories');
+    let categories: Category[] = [];
+    
+    try {
+        // await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for testing
+        categories = await fetcher<Category[]>('coins/categories');
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return <CategoriesFallback />;
+    }
 
     const columns: DataTableColumn<Category>[] = [
         { 
