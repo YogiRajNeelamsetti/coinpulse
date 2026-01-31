@@ -44,7 +44,6 @@ const CandleStickChart = ({
             startTransition(() => {
                 setOhlcData(newData ?? []);
             })
-            setOhlcData(newData ?? []);
 
         } catch(e) {
             console.error('Error fetching OHLC data:', e);

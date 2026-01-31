@@ -7,7 +7,7 @@ import DataTable from "./DataTable"
 import { useState } from "react"
 import CoinHeader from "./CoinHeader"
 
-const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveDataProps) => {
+const LiveDataWrapper = ({ coinId, poolId, coin, coinOHLCData }: LiveDataProps) => {
 
     const [ liveInterval, setLiveInterval ] = useState<'1s' | '1m'>('1s')
 
@@ -34,9 +34,9 @@ const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveD
             cellClassName: "type-cell",
             cell: (trade) => (
                 <span
-                className={trade.type === "b" ? "text-green-500" : "text-red-500"}
+                className={trade.type === "buy" ? "text-green-500" : "text-red-500"}
                 >
-                {trade.type === "b" ? "Buy" : "Sell"}
+                {trade.type === "buy" ? "Buy" : "Sell"}
                 </span>
             ),
         },
