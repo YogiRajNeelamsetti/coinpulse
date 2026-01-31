@@ -625,68 +625,80 @@
 
   #search-modal {
     .trigger {
-      @apply px-6 hover:bg-transparent! font-medium transition-all h-full cursor-pointer text-base text-purple-100 flex items-center gap-2;
+      @apply px-4 py-2 hover:bg-dark-500! font-medium transition-all h-10 cursor-pointer text-sm text-purple-100 flex items-center gap-2 rounded-lg bg-dark-500/50 border border-dark-400/50 hover:border-purple-600/50;
     }
 
     .kbd {
-      @apply pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100;
+      @apply pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border border-dark-400 bg-dark-700 px-1.5 font-mono text-[10px] font-medium text-purple-100 ml-2;
     }
 
     .dialog {
-      @apply bg-dark-400! max-w-sm sm:max-w-md md:max-w-2xl mx-auto;
+      @apply bg-dark-700! border border-dark-400/80 max-w-sm sm:max-w-md md:max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl shadow-black/50;
     }
 
     .cmd-input {
-      @apply bg-dark-500!;
+      @apply bg-dark-500! border-b border-dark-400/50;
 
       input {
-        @apply placeholder:text-purple-100!;
+        @apply placeholder:text-purple-100/60! text-white text-base py-4;
       }
     }
 
     .list {
-      @apply bg-dark-500 max-h-100;
+      @apply bg-dark-700 max-h-100 p-2;
     }
 
     .heading {
-      @apply flex items-center gap-2 text-purple-100;
+      @apply flex items-center gap-2 text-purple-100 text-xs uppercase tracking-wider font-semibold px-2 py-3;
     }
 
     .group {
-      @apply bg-dark-500 text-purple-100;
+      @apply bg-transparent text-purple-100;
     }
   }
 
   .dialog {
     .empty {
-      @apply py-6 text-center text-sm text-gray-400;
+      @apply py-12 text-center text-sm text-purple-100/60 flex flex-col items-center gap-2;
     }
 
     .search-item {
-      @apply grid grid-cols-4 gap-4 items-center justify-between data-[selected=true]:bg-dark-400 transition-all !cursor-pointer hover:bg-dark-400 py-3;
+      @apply grid grid-cols-4 gap-4 items-center justify-between data-[selected=true]:bg-dark-500 transition-all cursor-pointer! hover:bg-dark-500/80 py-3 px-3 rounded-lg mb-1;
 
       .coin-info {
-        @apply flex gap-4 items-center col-span-2;
+        @apply flex gap-3 items-center col-span-2;
 
         img {
-          @apply size-9 rounded-full;
+          @apply size-10 rounded-full ring-2 ring-dark-400/50 bg-dark-500;
         }
 
         div {
-          @apply flex flex-col;
+          @apply flex flex-col gap-0.5;
+        }
+
+        p:first-child {
+          @apply text-white font-semibold text-sm;
         }
 
         .coin-symbol {
-          @apply text-sm text-purple-100 uppercase;
+          @apply text-xs text-purple-100/80 uppercase font-medium tracking-wide;
         }
       }
 
       .coin-price {
-        @apply font-semibold text-sm lg:text-base;
+        @apply font-semibold text-sm text-white;
       }
 
       .coin-change {
-        @apply flex gap-1 text-sm lg:text-base items-center font-medium;
+        @apply flex gap-1.5 text-sm items-center font-semibold justify-end px-2 py-1 rounded-md;
+      }
+
+      .coin-change.text-green-500 {
+        @apply bg-green-500/10;
+      }
+
+      .coin-change.text-red-500 {
+        @apply bg-red-500/10;
       }
     }
   }
@@ -855,6 +867,7 @@
     .control-button {
       @apply cursor-pointer;
     }
+
 
     .control-disabled {
       @apply pointer-events-none opacity-50;

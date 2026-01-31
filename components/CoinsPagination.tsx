@@ -1,5 +1,4 @@
 'use client'
-import page from "@/app/coins/page";
 import {
     Pagination,
     PaginationContent,
