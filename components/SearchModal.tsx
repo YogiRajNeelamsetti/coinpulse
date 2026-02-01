@@ -60,7 +60,13 @@ const SearchItem = ({ coin, onSelect, isActiveName }: SearchItemProps) => {
 }
 
 
-const SearchModal = ({ initialTrendingCoins = [] }: { initialTrendingCoins?: TrendingCoin[] }) => {
+const trendingFetcher = async (url: string) => {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed to fetch trending coins');
+    return res.json();
+};
+
+const SearchModal = () => {
 
     const router = useRouter();
     const [ searchQuery, setSearchQuery ] = useState('');
@@ -68,6 +74,12 @@ const SearchModal = ({ initialTrendingCoins = [] }: { initialTrendingCoins?: Tre
     const [ isDebouncing, setIsDebouncing ] = useState(false);
 
     const [open, setOpen] = useState(false);
+
+    const { data: trendingData } = useSWR<{ coins: TrendingCoin[] }>(
+        open ? 'https://api.coingecko.com/api/v3/search/trending' : null,
+        trendingFetcher,
+        { revalidateOnFocus: false }
+    );
     // cmd + k | ctrl + k to open search
     useKey(
         (event) => (event.key === 'k' && (event.metaKey || event.ctrlKey)), 
@@ -104,14 +116,10 @@ const SearchModal = ({ initialTrendingCoins = [] }: { initialTrendingCoins?: Tre
 
     const hasQuery = debouncedSearchQuery.length > 0;
     const isTyping = searchQuery.trim().length > 0;
-    const trendingCoins = initialTrendingCoins.slice(0, TRENDING_LIMIT);
-    const showTrending = !isTyping && trendingCoins.length > 0;
+    const trendingCoins = trendingData?.coins?.slice(0, TRENDING_LIMIT) ?? [];
 
     // Show loading when debouncing OR when fetching
     const isLoading = isDebouncing || isSearching;
-
-    const isSearchEmpty = !isTyping && !showTrending;
-    const isTrendingListVisible = showTrending;
 
     const isNoResults = !isLoading && hasQuery && searchResults.length === 0;
     const isResultsVisible = !isLoading && hasQuery && searchResults.length > 0;
@@ -145,24 +153,25 @@ const SearchModal = ({ initialTrendingCoins = [] }: { initialTrendingCoins?: Tre
                         <span>Searching...</span>
                     </div>
                 )}
-                {isSearchEmpty && (
-                    <div className="empty">
-                        <SearchIcon className="size-5 text-purple-100/40" />
-                        <span>Start typing to search for coins</span>
-                    </div>
-                )}
 
-                {isTrendingListVisible && (
-                    <CommandGroup heading={<span className="heading"><Flame className="size-4 text-yellow-500" /> Trending</span>}>
-                        {trendingCoins.map(({item}) => (
-                            <SearchItem 
-                                key={item.id} 
-                                coin={item} 
-                                onSelect={handleSelect} 
-                                isActiveName={false}
-                            />
-                        ))}
-                    </CommandGroup>
+                {!isTyping && (
+                    trendingCoins.length > 0 ? (
+                        <CommandGroup heading={<span className="heading"><Flame className="size-4 text-yellow-500" /> Trending</span>}>
+                            {trendingCoins.map(({item}) => (
+                                <SearchItem 
+                                    key={item.id} 
+                                    coin={item} 
+                                    onSelect={handleSelect} 
+                                    isActiveName={false}
+                                />
+                            ))}
+                        </CommandGroup>
+                    ) : (
+                        <div className="empty">
+                            <SearchIcon className="size-5 text-purple-100/40" />
+                            <span>Start typing to search for coins</span>
+                        </div>
+                    )
                 )}
 
                 {isNoResults && (
