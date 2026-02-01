@@ -8,7 +8,7 @@
 
 A real-time cryptocurrency market tracker that provides live price updates, interactive charts, and comprehensive market data for thousands of cryptocurrencies.
 
-![Screenshot](./screenshot.png)
+![Screenshot](./public/screenshot.png)
 
 ---
 
